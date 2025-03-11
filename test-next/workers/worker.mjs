@@ -1,10 +1,10 @@
-import { Worker } from "bullmq";
+import { QueueEvents, Worker } from "bullmq";
 import Redis from "ioredis";
 import fs from "fs";
 import readline from "readline";
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
-import { Worker, isMainThread, parentPort, workerData } from "worker_threads";
+import { broadcastUpdate } from "../lib/websocket.mjs";
 
 dotenv.config();
 
@@ -13,7 +13,56 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
-console.log("Waiting for jobs to be processed...");
+
+function waitForWebSocketInitialization() {
+  return new Promise((resolve) => {
+    const interval = setInterval(() => {
+      if (global._wss) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, 500);
+  });
+}
+
+(async () => {
+  console.log("⏳ Waiting for WebSocket server...");
+  await waitForWebSocketInitialization();
+  console.log("✅ WebSocket server detected, proceeding with worker tasks...");
+})();
+
+// Now the worker can safely broadcast updates
+
+const queueEvents = new QueueEvents("log-processing-queue", {
+  connection: redis,
+});
+
+queueEvents.on("progress", ({ jobId, data }) => {
+  // console.log(`Job ${jobId} progress: ${data}%`);
+  broadcastUpdate({
+    jobId,
+    status: "processing",
+    progress: data,
+  });
+});
+
+queueEvents.on("completed", ({ jobId, returnvalue }) => {
+  // console.log(`Job ${jobId} completed.`);
+  broadcastUpdate({
+    jobId,
+    status: "completed",
+    ...returnvalue,
+  });
+});
+
+queueEvents.on("failed", ({ jobId, failedReason }) => {
+  // console.log(`Job ${jobId} failed: ${failedReason}`);
+  broadcastUpdate({
+    jobId,
+    status: "failed",
+    error: failedReason,
+  });
+});
 
 const worker = new Worker(
   "log-processing-queue",
@@ -33,7 +82,6 @@ const worker = new Worker(
       const keywords = process.env.KEYWORDS
         ? process.env.KEYWORDS.split(",")
         : [];
-      console.log(keywords);
 
       for await (const line of rl) {
         keywords.forEach((keyword) => {

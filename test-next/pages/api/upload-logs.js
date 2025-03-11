@@ -25,7 +25,7 @@ export const config = {
 
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 10, // Limit each IP to 10 requests per windowMs
+  max: 7, // Limit each IP to 10 requests per windowMs
   message: "Too many requests, please try again later.",
 });
 
