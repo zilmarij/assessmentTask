@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { api } from "@/api/axios";
-import axios from "axios";
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -26,15 +25,9 @@ export default function Home() {
     formData.append("file", file);
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         "http://localhost:3002/api/upload-logs",
-        formData,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            // "Content-Type": "application/json",
-          },
-        }
+        formData
       );
       setMessage(`Upload Successful! Job ID: ${response.data.jobId}`);
     } catch (error) {
@@ -45,8 +38,8 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <h1 className="text-2xl font-semibold mb-4">Upload Log File</h1>
+    <div className="h-screen flex flex-col items-center justify-center bg-gray-100">
+      <h1 className="text-lg font-semibold mb-4">Upload Log File</h1>
       <input
         type="file"
         onChange={handleFileChange}
