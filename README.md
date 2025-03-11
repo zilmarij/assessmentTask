@@ -30,7 +30,36 @@ Make sure you have the following installed:
 ### 1️⃣ **Clone the Repository**
 
 ```sh
-git clone <repo-url>
-cd <repo-folder>
+git clone https://github.com/zilmarij/assessmentTask.git
+cd assessmentTask
 
 ```
+
+### 2️⃣ **Install Dependencies at backend**
+
+```sh
+cd test-next
+npm install
+```
+
+### 3️⃣ **Run the Node Server, BullMQ Workers, and Initialize WebSockets**
+
+```sh
+npm run dev
+node ./workers/worker.js
+```
+
+### 4️⃣ **Install Dependencies at frontend**
+
+```sh
+cd log-dashboard-fe
+npm install
+```
+
+### 5️⃣ **Run the Frontend**
+
+```sh
+npm run dev
+```
+
+---
