@@ -62,6 +62,6 @@ npm install
 npm run dev
 ```
 
-## Upload the sample.log file to test the app
+#### Upload the sample.log file to test the app
 
 ---
