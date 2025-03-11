@@ -49,7 +49,7 @@ npm run dev
 node ./workers/worker.js
 ```
 
-### 4️⃣ **Initiate Redis Server on WSL **
+### 4️⃣ **Initiate Redis Server on WSL**
 
 ```sh
 sudo service redis-server start
