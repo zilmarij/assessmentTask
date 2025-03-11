@@ -30,8 +30,10 @@ export default function Home() {
         formData
       );
       setMessage(`Upload Successful! Job ID: ${response.data.jobId}`);
-    } catch (error) {
-      setMessage("Upload failed. Please try again.");
+    } catch (error: any) {
+      setMessage(
+        `${error.response.data}` || "Upload failed. Please try again."
+      );
     }
 
     setUploading(false);
