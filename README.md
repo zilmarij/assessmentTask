@@ -25,7 +25,7 @@ Make sure you have the following installed:
 
 ---
 
-## 🚀 Setup Instructions
+## 🚀 Setup & Running Instructions
 
 ### 1️⃣ **Clone the Repository**
 
@@ -61,5 +61,7 @@ npm install
 ```sh
 npm run dev
 ```
+
+## Upload the sample.log file to test the app
 
 ---

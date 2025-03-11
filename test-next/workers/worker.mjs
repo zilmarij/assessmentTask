@@ -93,7 +93,7 @@ const worker = new Worker(
         //error Count
         if (
           line.toLowerCase().includes("error") ||
-          /\b(error|failed|exception)\b/i.test(line)
+          /\b(error|failed|warn)\b/i.test(line)
         ) {
           errorCount++;
         }
