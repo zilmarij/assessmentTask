@@ -49,20 +49,20 @@ npm run dev
 node ./workers/worker.js
 ```
 
-### **4️⃣ Initiate Redis Server on WSL **
+### 4️⃣ **Initiate Redis Server on WSL **
 
 ```sh
 sudo service redis-server start
 ```
 
-### **5️⃣ Install Dependencies at frontend**
+### 5️⃣ **Install Dependencies at frontend**
 
 ```sh
 cd log-dashboard-fe
 npm install
 ```
 
-### **6️⃣ Run the Frontend**
+### 6️⃣ **Run the Frontend**
 
 ```sh
 npm run dev
