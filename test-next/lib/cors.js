@@ -1,6 +1,5 @@
 import Cors from "cors";
 
-// Initialize CORS configuration
 const cors = Cors({
   origin: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",

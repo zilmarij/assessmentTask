@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import cors, { runMiddleware } from "../../lib/cors"; // Import CORS
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -6,6 +7,8 @@ const supabase = createClient(
 );
 
 export default async function handler(req, res) {
+  await runMiddleware(req, res, cors);
+
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
